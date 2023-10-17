@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { request } from '../utils/request';
+import axios from 'axios';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const handleLogin = () => {
-        request("/authentifier" , "GET" , {
-            nom: username,     
-            password: password 
-        }).then(response =>{
+        const formDataToSend = new FormData();
+        formDataToSend.append('nom', username);
+        formDataToSend.append('password', password);
+        axios.post("http://localhost:8081/authentifier" , formDataToSend).then(response =>{
             console.log(response.data);
             alert(response);
             if(response.data === undefined){

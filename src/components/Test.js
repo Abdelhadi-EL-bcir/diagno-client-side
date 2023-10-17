@@ -31,8 +31,12 @@ const Test = () => {
     };
 
     const handleSubmit = () => {
-        responses.forEach(element => {
-            console.log(element);
+        responses.forEach(responce => {
+            axios.post("http://localhost:8081/res/add" , responce).then(
+                res => console.log(res.data)
+                ).catch(
+                    error => console.log(error)
+                )          
         });
     };
 
@@ -98,7 +102,11 @@ const Test = () => {
                         ))}
                     </tbody>
                 </table>
-                <button className='btn btn-primary m-3' onClick={handleSubmit}>Submit</button>
+                <div className='container'>
+                    <div className='text-center'>
+                      <button className='btn btn-primary m-3' onClick={handleSubmit}>Submit</button>
+                    </div>
+                </div>
             </div>
         </section>
     );
