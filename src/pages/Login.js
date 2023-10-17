@@ -21,7 +21,7 @@ const Login = () => {
     };
 
     return (
-        <section class=" mt-5">
+        <section class="mt-5">
             <div class="container-fluid h-custom">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-md-6 col-lg-6 col-xl-4 offset-xl-1">
