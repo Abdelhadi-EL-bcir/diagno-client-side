@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { request } from '../utils/request';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
     const handleLogin = () => {
-        const apiUrl = 'https://your-api-endpoint.com/login';
-
-        axios.post(apiUrl, {
-            username: username,
-            password: password
+        request("/authentifier" , "GET" , {
+            nom: username,     
+            password: password 
+        }).then(response =>{
+            console.log(response.data);
+            alert(response);
+            if(response.data === undefined){
+                alert("user not found");
+            }else{
+                alert(response.data);
+                navigate('/test');
+            }
+        }).catch(error =>{
+            console.log(error);
+            alert(error.message);
         })
-            .then(response => {
-                console.log('Login successful', response.data);
-            })
-            .catch(error => {
-                console.error('Login failed', error);
-            });
     };
 
     return (
