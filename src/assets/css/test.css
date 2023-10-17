@@ -1,0 +1,23 @@
+.rounded-table {
+    border: 2px solid blue;
+    border-radius: 10px;
+    border-collapse: separate;
+    overflow: hidden;
+    width: 80%;
+  }
+  
+  .question-cell {
+    text-align: left;
+    font-weight: bold;
+    width: 50%;
+  }
+
+  .radio-cell {
+    text-align: center;
+  }
+  
+  .radio-cell input[type="radio"] {
+    margin: 0 auto;
+    display: block;
+  }
+  
