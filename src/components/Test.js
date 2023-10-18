@@ -5,6 +5,7 @@ import axios from 'axios';
 const Test = () => {
     const [list, setList] = useState([]);
     const [responses, setResponses] = useState([]);
+    const [totalPoints, setTotalPoints] = useState(0);
 
     useEffect(() => {
         axios.get("http://localhost:8081/api/questions/all")
@@ -24,20 +25,38 @@ const Test = () => {
             diaganostic: {
                 id_diagnostic: 1,
             },
-            question: {
-                id_question: item.id_question
+            questions: {
+                question_id: item.id_question
             }
         }]);
     };
 
     const handleSubmit = () => {
-        responses.forEach(responce => {
-            axios.post("http://localhost:8081/res/add" , responce).then(
-                res => console.log(res.data)
-                ).catch(
-                    error => console.log(error)
-                )          
+        let pointsSum = 0;
+        responses.forEach(response => {
+            switch (response.reponse) {
+                case 'Tout_A_Fait_Daccord':
+                    pointsSum += 5;
+                    break;
+                case 'Daccord':
+                    pointsSum += 4;
+                    break;
+                case 'Neutre':
+                    pointsSum += 3;
+                    break;
+                case 'Pas_daccord':
+                    pointsSum += 2;
+                    break;
+                case 'Desaccord_Total':
+                    pointsSum += 1;
+                    break;
+                default:
+            }
+            axios.post("http://localhost:8081/res/add", response)
+                .then(res => console.log(res.data))
+                .catch(error => console.log(error));
         });
+        setTotalPoints(pointsSum);
     };
 
     return (
@@ -105,6 +124,7 @@ const Test = () => {
                 <div className='container'>
                     <div className='text-center'>
                       <button className='btn btn-primary m-3' onClick={handleSubmit}>Submit</button>
+                      <p>Total Points: {totalPoints}</p>
                     </div>
                 </div>
             </div>
